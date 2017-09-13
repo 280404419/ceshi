@@ -2,6 +2,7 @@ import sun.org.mozilla.javascript.internal.ast.ScriptNode;
 
 import javax.swing.plaf.SliderUI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -186,6 +187,38 @@ public class Input {
     public static void main(String[] args) {
         /*int a = input5();
         System.out.println(a);*/
-        input6();
+      //  input6();
+       /* Scanner sc = new Scanner(System.in);
+        int[] a = new int[4];
+        for (int i = 0 ; i<4;i++){
+            a[i] =  sc.nextInt();
+        }
+        for (int i = 0 ; i<4;i++){
+            System.out.println(a[i]);
+        }*/
+
+
+        Scanner scanner = new Scanner(System.in);
+while (scanner.hasNext()) {
+int n = scanner.nextInt();
+int[] nums = new int[n];
+for(int i=0; i<n; i++)
+nums[i] = scanner.nextInt();
+
+Arrays.sort(nums);
+long num = 1;
+while (true) {
+long sum = 0;
+for(int i=n-1; i>=0 && sum!=num; i--) {
+if(nums[i] + sum <= num)
+sum += nums[i];
+}
+if (sum != num) {
+System.out.println(num);
+break;
+}
+num++;
+}
+}
     }
 }

@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -13,7 +15,12 @@ public class erchashu {
        // zhongxu(root);
         //houxu(root);
         //feizhongxu(root);
-        feixianxu(root);
+        //feixianxu(root);
+       // feihouxu(root);
+        //cengcibianli(root);
+       // System.out.println(nodenum(root));
+        //System.out.println(shendu(root));
+        System.out.println(feishendu(root));
     }
     public static TreeNode insertNodeFromArray(int[] array, int start, int end){
         if(end < start){
@@ -86,6 +93,86 @@ public class erchashu {
             houxu(root.right);
             visit(root.data);
         }
+    }
+    public static void feihouxu(TreeNode root){
+        Stack<TreeNode> s = new Stack();
+        Stack<TreeNode> out = new Stack();
+        if(root!=null){
+            while (root!=null||!s.empty()){
+                while (root!=null){
+                    s.push(root);
+                    out.push(root);
+                    root = root.right;
+                }
+                if(!s.empty()){
+                    root = s.pop();
+                   // visit(root.data);
+                    root = root.left;
+                }
+            }
+        }
+        while (out.size()>0){
+            System.out.println(out.pop().data);
+        }
+    }
+    //层次遍历二叉树
+    public static void cengcibianli(TreeNode root){
+        Queue<TreeNode> q = new LinkedList<>();
+        if(root==null){
+            return;
+        }
+        q.add(root);
+        while (!q.isEmpty()){
+            TreeNode t = q.poll();
+            visit(t.data);
+            if(t.left!=null){
+                q.add(t.left);
+
+            }
+            if(t.right!=null){
+                q.add(t.right);
+            }
+        }
+    }
+    //求二叉树节点个数
+    public static int nodenum(TreeNode root){
+        if(root==null){
+            return 0;
+        }
+        return nodenum(root.left)+nodenum(root.right)+1;
+    }
+    //求二叉树深度
+    public static int shendu(TreeNode root){
+        if(root==null)
+            return 0;
+        int zuoshendu = shendu(root.left);
+        int youshendu = shendu(root.right);
+        return zuoshendu>youshendu ? (zuoshendu+1):(youshendu+1);
+    }
+    //非递归求二叉树深度
+    public static int feishendu(TreeNode root){
+        int treedeep = 0;
+        Stack<TreeNode> s = new Stack<>();
+        Stack<Integer> tag = new Stack<>();
+        while (root!=null||!s.empty()){
+            while (root!=null){
+                s.push(root);
+                tag.push(0);
+                root = root.left;
+            }
+            if(tag.peek()==1){
+                treedeep = (treedeep > s.size())?treedeep:s.size();
+                s.pop();
+                tag.pop();
+                root = null;
+            }else {
+                root = s.peek();
+                root = root.right;
+                tag.pop();
+                tag.push(1);
+            }
+        }
+        return treedeep;
     }
     public static void visit(int a){
         System.out.println(a);
